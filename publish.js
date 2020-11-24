@@ -347,18 +347,25 @@ function buildMemberNav(items, itemHeading, itemsSeen, linktoFn) {
           }
           itemsNav += '<li>' + linktoFn(item.longname, displayName.replace(/\b(module|event):/g, ''))
 
-          if (item.children && item.children.length) {
-            itemsNav += '<ul>'
-            item.children.forEach(child => {
-              if (env.conf.templates.default.useLongnameInNav) {
-                displayName = child.longname
-              } else {
-                displayName = child.name
-              }
-              itemsNav += '<li>' + linktoFn(child.longname, displayName.replace(/\b(module|event):/g, '')) + '</li>'
-            })
-            itemsNav += '</ul>'
+          const loopChildTutorials = (childrenItem) => {
+            if (!childrenItem.children) return;
+            if (childrenItem.children && childrenItem.children.length) {
+              itemsNav += '<ul>'
+              childrenItem.children.forEach(child => {
+                if (env.conf.templates.default.useLongnameInNav) {
+                  displayName = child.longname
+                } else {
+                  displayName = child.name
+                }
+                itemsNav += '<li>' + linktoFn(child.longname, displayName.replace(/\b(module|event):/g, '')) + '</li>'
+                loopChildTutorials(child)
+              })
+              itemsNav += '</ul>'
+            }
           }
+          loopChildTutorials(item)
+
+          
 
           itemsNav += '</li>'
     
