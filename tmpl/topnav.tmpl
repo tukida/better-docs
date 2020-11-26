@@ -35,6 +35,25 @@
                 </div>
                 <?js } ?>
             <div class="navigation">
+                <?js if (Object.keys(this.sections).length) { ?>
+                    <?js Object.entries(this.sections).forEach(([key, section]) => { ?>
+                        <div class="dropdown is-hoverable is-right">
+                            <a class="dropdown-trigger link">
+                                <?js= key[0].toUpperCase() + key.slice(1) ?>
+                                <i class="fas fa-chevron-down fa-xs"></i>
+                            </a>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-content">
+                                <?js section.forEach(function(child) { ?>
+                                    <a class="dropdown-item" href="<?js= self.sectionToUrl(key, child.name) ?>">
+                                        <?js= child.title ?>
+                                    </a>
+                                <?js }); ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?js }) ?>
+                <?js } ?>
                 <a
                     href="<?js= betterDocs.landing ? 'docs.html' : 'index.html' ?>"
                     class="link"

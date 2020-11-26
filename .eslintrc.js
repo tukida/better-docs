@@ -17,7 +17,7 @@ module.exports = {
         'indent': ['error', 2],
         'linebreak-style': ['error', 'unix'],
         'quotes': ['error', 'single'],
-        'semi': ['error', 'never'],
+        'semi': ['error', 'always'],
         'import/no-unresolved': 'off',
         'no-underscore-dangle': 'off',
         'guard-for-in': 'off',

@@ -18,12 +18,16 @@
         "recurse": true,
         "verbose": true,
         "template": "./",
-        "tutorials": "./fixtures/tutorials"
+        "sections": ["introduction", "development", "tutorials2"],
+        "introduction": "./fixtures/introduction",
+        "development": "./fixtures/development",
+        "tutorials2": "./fixtures/tutorials2"
     },
     "templates": {
         "better-docs": {
-            "name": "AdminBro Documentation",
-            "logo": "images/logo.png"
-        }
+            "name": "AdminBro Documentation"
+            // "logo": "https://id.zstudio.io/static/images/logo_BW.png"
+        },
+        "search": true
     }
 }
