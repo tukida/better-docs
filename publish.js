@@ -388,7 +388,8 @@ function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
 
         if (!hasOwnProp.call(item, 'longname')) {
           itemsNav += '<li>' + linktoFn(initCategory, '', item.name) + '</li>';
-          itemsNavL1 += '<li>' + linktoFn(initCategory, '', item.name) + '</li>';
+          itemsNavL1 +=
+            '<li>' + linktoFn(initCategory, '', item.name) + '</li>';
         } else if (!hasOwnProp.call(itemsSeen, item.longname)) {
           if (env.conf.templates.default.useLongnameInNav) {
             displayName = item.longname;
@@ -453,7 +454,9 @@ function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
           itemsSeen[item.longname] = true;
         }
         if (initCategory && subCategoryName) {
-          view[`${subCategoryName}_${item.name}_nav`] = `<div class="category"><h3>${subCategoryName}</h3><ul>${itemsNavL1}</ul</div>`
+          view[
+            `${subCategoryName}_${item.name}_nav`
+          ] = `<div class="category"><h3>${subCategoryName}</h3><ul>${itemsNavL1}</ul</div>`;
         }
       });
 
@@ -773,10 +776,10 @@ exports.publish = function(taffyData, opts, tutorials) {
     // with a bug in JSDoc 3.2.x.
     staticFilePaths =
       conf.default.staticFiles.include || conf.default.staticFiles.paths || [];
-    staticFileFilter = new (require('jsdoc/src/filter')).Filter(
+    staticFileFilter = new (require('jsdoc/src/filter').Filter)(
       conf.default.staticFiles
     );
-    staticFileScanner = new (require('jsdoc/src/scanner')).Scanner();
+    staticFileScanner = new (require('jsdoc/src/scanner').Scanner)();
 
     staticFilePaths.forEach(function(filePath) {
       var extraStaticFiles;
@@ -953,7 +956,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
   generate(
     'Home',
-    '',
+    'API Documentation',
     packages
       .concat([
         {
@@ -1080,22 +1083,31 @@ exports.publish = function(taffyData, opts, tutorials) {
     });
   }
 
-  function saveChildrenSection(title, node) {
+  function saveChildrenSection(title, node, raw_title) {
     node.children.forEach(function(child) {
       generateTutorial(
         child.title,
         title,
         child,
         helper.sectionToUrl(title, child.name),
-        child.name
+        raw_title
       );
-      saveChildrenSection(title, child);
+      saveChildrenSection(title, child, raw_title);
     });
   }
 
   saveChildren(tutorials);
   Object.entries(sections).forEach(([section, value]) => {
-    saveChildrenSection(section, value);
+    value.children.forEach((child) => {
+      generateTutorial(
+        child.title,
+        section,
+        child,
+        helper.sectionToUrl(section, child.name),
+        child.name
+      );
+      saveChildrenSection(section, child, child.name);
+    });
   });
 
   function saveLandingPage() {

@@ -18,15 +18,15 @@
         "recurse": true,
         "verbose": true,
         "template": "./",
-        "sections": ["introduction", "development", "tutorials2"],
+        "sections": ["introduction", "development", "tutorials"],
         "introduction": "./fixtures/introduction",
         "development": "./fixtures/development",
-        "tutorials2": "./fixtures/tutorials2"
+        "tutorials": "./fixtures/tutorials"
     },
     "templates": {
         "better-docs": {
-            "name": "AdminBro Documentation"
-            // "logo": "https://id.zstudio.io/static/images/logo_BW.png"
+            "name": "Documentation",
+            "logo": "https://id.zstudio.io/static/images/logo_BW.png"
         },
         "search": true
     }

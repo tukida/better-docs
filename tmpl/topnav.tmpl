@@ -16,7 +16,7 @@
                 </a>
             <?js } ?>
             <?js if(betterDocs.name) { ?> 
-                <a href="index.html">
+                <a class="brandName" href="index.html">
                     <h1 class="navbar-item"><?js= betterDocs.name?></h1>
                 </a>
             <?js } ?>
@@ -60,23 +60,6 @@
                 >
                     API Documentation
                 </a>
-                <?js if (this.tutorials.length) { ?>
-                <div class="dropdown is-hoverable is-right">
-                    <a class="dropdown-trigger link">
-                        Tutorials
-                        <i class="fas fa-chevron-down fa-xs"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <div class="dropdown-content">
-                        <?js this.tutorials.forEach(function(tutorial) { ?>
-                            <a class="dropdown-item" href="<?js= self.tutorialToUrl(tutorial.name) ?>">
-                                <?js= tutorial.title ?>
-                            </a>
-                        <?js }); ?>
-                        </div>
-                    </div>
-                </div>
-                <?js } ?>
                 <?js if(betterDocs.navLinks && betterDocs.navLinks.length) { ?> 
                     <?js betterDocs.navLinks.forEach(function(link) { ?>
                         <a
@@ -89,6 +72,49 @@
                 <?js } ?>
                 
             </div>
+            <div id="navBarTitle" class="navigation_mobile__button">
+                <a href="javascript:void(0);" class="link">
+                    <?js= subtitle ?>
+                    <i class="fas fa-chevron-down fa-xs"></i>
+                </a>
+            </div>
+            <div id="navBarMobile" class="navigation_mobile">
+                <?js if (Object.keys(this.sections).length) { ?>
+                    <?js Object.entries(this.sections).forEach(([key, section]) => { ?>
+                        <div class="nav-item dropdown">
+                            <a class="dropdown-trigger link <?js= key==subtitle ? 'selected' : '' ?>">
+                                <?js= key[0].toUpperCase() + key.slice(1) ?>
+                            </a>
+                            <div class="dropdown-panel <?js= key==subtitle ? 'show' : '' ?>">
+                                <div class="dropdown-content">
+                                <?js section.forEach(function(child) { ?>
+                                    <a class="dropdown-item" href="<?js= self.sectionToUrl(key, child.name) ?>">
+                                        <?js= child.title ?>
+                                    </a>
+                                <?js }); ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?js }) ?>
+                <?js } ?>
+                <a
+                    href="<?js= betterDocs.landing ? 'docs.html' : 'index.html' ?>"
+                    class="link <?js= 'API Documentation'==subtitle ? 'selected' : '' ?>"
+                >
+                    API Documentation
+                </a>
+                <?js if(betterDocs.navLinks && betterDocs.navLinks.length) { ?> 
+                    <?js betterDocs.navLinks.forEach(function(link) { ?>
+                        <a
+                            class="link user-link <?js= link.className ? link.className : '' ?>"
+                            href="<?js= link.href ?>"
+                        >
+                            <?js= link.label ?>
+                        </a>
+                    <?js }) ?>
+                <?js } ?>
+            </div>
+            
         </div>
     </div>
 </div>

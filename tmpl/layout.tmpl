@@ -20,7 +20,7 @@ var search = env.conf.templates && env.conf.templates.search
 
 <body class="<?js= self.smallHeader ? 'layout small-header' : 'layout'?>">
     <div id="stickyNavbarOverlay"></div>
-    <?js= this.partial('topnav.tmpl', { betterDocs }) ?>
+    <?js= this.partial('topnav.tmpl', { betterDocs, subtitle, title }) ?>
     <div id="main">
         <div
             class="sidebar <?js= isTutorial ? 'tutorials' : '' ?>"
@@ -44,7 +44,6 @@ var search = env.conf.templates && env.conf.templates.search
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p><?js= subtitle ?></p>
                     <h1><?js= title ?></h1>
                 </header>
                 <?js= content ?>

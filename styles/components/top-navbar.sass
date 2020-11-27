@@ -16,17 +16,37 @@
   .inner
     display: flex
     align-items: center
+    height: 100%
+
+  .logo
+    display: flex
+    justify-content: center
+    margin: 0 1rem
+    @include until($tablet)
+      display: none
+
+  .image
+    display: flex
+    justify-content: center
+    align-items: center
+    width: 120px
+  
+  .brandName
+    display: inline-block
     
 
   #hamburger
     margin-left: 0
 
   @include until($tablet)
-    .logo
+    .brandName
       display: none
   
   .menu
     flex-grow: 1
+    @include until($tablet)
+      display: flex
+      align-items: center
   
   .menu .top-buttons
     text-align: right
@@ -37,9 +57,11 @@
     .button
       margin-left: $space-lg
   
-  .menu .navigation
+  .menu .navigation, .navigation_mobile__button
     text-align: right
     margin-bottom: $space-sm
+    @include until($tablet)
+      display: none
     .link
       border: none
       display: inline-block
@@ -55,3 +77,98 @@
       @include until($tablet)
         &.user-link
           display: none
+
+  .menu .navigation_mobile__button
+    display: none
+    a
+      &::first-letter
+        text-transform: uppercase
+    @include until($tablet)
+      display: block
+      position: absolute
+      right: 0
+      padding-right: 1rem
+  
+  .menu .navigation_mobile
+    display: none
+    @include until($tablet)
+      display: flex
+      flex-direction: column
+      position: fixed
+      left: 0
+      right: 0
+      top: 75px
+      bottom: 0
+      background-color: #f7f7f7
+      overflow: auto
+      z-index: 99
+      opacity: 0
+      visibility: hidden
+      transition: opacity .2s,top .2s
+      &.show
+        opacity: 1
+        visibility: visible
+      .nav-item
+        display: block
+        padding: 0
+      .link
+        display: block
+        padding: 20px 40px
+        font-size: 17px
+        position: relative
+        height: auto
+        line-height: 1.4
+        color: #222
+        &.selected
+            color: #169AFF
+        &:hover
+          color: #888
+        &:not(:last-child):before
+          content: ""
+          display: block
+          width: 12px
+          height: 12px
+          background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M2.99427682 1.3995186L3.88640626.5l4.86067483 4.90093365c.3281374.33085521.331048.86434278 0 1.1981327L3.88640626 11.5l-.89212944-.89951856L7.55696751 6 2.99427682 1.3995186z' fill='%23000' fill-rule='evenodd' fill-opacity='.3'/%3e%3c/svg%3e")
+          background-size: contain
+          background-repeat: no-repeat
+          position: absolute
+          right: 40px
+          top: 50%
+          margin-top: -6px
+        &::after
+          content: ""
+          display: block
+          position: absolute
+          bottom: 0
+          left: 40px
+          right: 40px
+          height: 1px
+          background-color: rgba(0,0,0,.08)
+          transform: scaleY(.5)
+          width: auto
+          opacity: 1
+          margin: 0
+  .menu .dropdown-panel
+    display: none
+    transition: opacity .2s,top .2s
+    &.show
+      display: block
+    
+  .menu .dropdown-content
+    border-radius: 0
+    padding: 0
+    .dropdown-item
+      padding-left: 4rem
+      &:not(:last-child):after
+        content: ""
+        display: block
+        position: absolute
+        bottom: 0
+        left: 4rem
+        right: 4rem
+        height: 1px
+        background-color: rgba(0,0,0,0.08)
+        transform: scaleY(0.5)
+        width: auto
+        opacity: 1
+        margin: 0
