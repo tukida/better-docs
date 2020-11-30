@@ -631,6 +631,17 @@ It simply removes that from the code so JSDoc wont throw an error. In order to u
     ],
 ```
 
+# Additional Feature
+
+- Change UI
+- Add more than one section. Config:
+
+```
+  "sections": ["introduction", "development"],
+  "introduction": "./fixtures/introduction",
+  "development": "./fixtures/development"
+```
+
 # Setting up for the development
 
 If you want to change the theme locally follow the steps:

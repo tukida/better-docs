@@ -18,15 +18,14 @@
         "recurse": true,
         "verbose": true,
         "template": "./",
-        "sections": ["introduction", "development", "tutorials"],
+        "sections": ["introduction", "development"],
         "introduction": "./fixtures/introduction",
-        "development": "./fixtures/development",
-        "tutorials": "./fixtures/tutorials"
+        "development": "./fixtures/development"
     },
     "templates": {
         "better-docs": {
             "name": "Documentation",
-            "logo": "https://id.zstudio.io/static/images/logo_BW.png"
+            "logo": "/images/logo.png"
         },
         "search": true
     }
