@@ -1,6 +1,6 @@
 {
   "name": "kida-docs",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "JSdoc theme",
   "repository": "github:tukida/better-docs",
   "main": "publish.js",
