@@ -255,7 +255,8 @@ const htmlsafe = (exports.htmlsafe = (str) => {
     str = String(str);
   }
 
-  return str.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  // return str.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  return str;
 });
 
 function parseType(longname) {
