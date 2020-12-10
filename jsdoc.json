@@ -25,7 +25,8 @@
     "templates": {
         "better-docs": {
             "name": "Documentation",
-            "logo": "/images/logo.png"
+            "logo": "/images/logo.png",
+            "version": "v1.0.0"
         },
         "search": true
     }

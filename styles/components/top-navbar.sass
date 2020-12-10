@@ -33,6 +33,9 @@
   
   .brandName
     display: inline-block
+
+  .version
+    font-size: 15px
     
 
   #hamburger
@@ -40,6 +43,8 @@
 
   @include until($tablet)
     .brandName
+      display: none
+    .version
       display: none
   
   .menu

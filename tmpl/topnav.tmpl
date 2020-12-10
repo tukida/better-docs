@@ -18,6 +18,9 @@
             <?js if(betterDocs.name) { ?> 
                 <a class="brandName" href="index.html">
                     <h1 class="navbar-item"><?js= betterDocs.name?></h1>
+                    <?js if(betterDocs.version) { ?> 
+                        <h1 class="navbar-item version"><?js= betterDocs.version?></h1>
+                    <?js } ?>
                 </a>
             <?js } ?>
         </div>
