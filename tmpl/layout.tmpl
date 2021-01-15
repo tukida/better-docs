@@ -34,6 +34,8 @@ var search = env.conf.templates && env.conf.templates.search
             <nav>
                 <?js if (this[`${subtitle}_${raw_title}_nav`]) { ?>
                     <?js= this[`${subtitle}_${raw_title}_nav`] ?>
+                <?js } else if (this[`${subtitle}Nav`]) { ?>
+                    <?js= this[`${subtitle}Nav`] ?>
                 <?js } else if (isTutorial) { ?>
                     <?js= this.tutorialsNav ?>
                 <?js } else { ?>

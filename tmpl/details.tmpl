@@ -1,5 +1,6 @@
 <?js
 var data = obj;
+console.log(data)
 var self = this;
 var defaultObjectClass = '';
 
@@ -131,14 +132,5 @@ if (data.defaultvalue && (data.defaultvaluetype === 'object' || data.defaultvalu
             <li><?js= t ?></li>
         <?js }); ?></ul>
     </dd>
-    <?js } ?>
-
-    <?js if (data.meta && self.outputSourceFiles) {?>
-        <p class="tag-source">
-            <?js= self.linkto(meta.shortpath, 'View Source', 'button') ?>
-            <span>
-                <?js= self.linkto(meta.shortpath) ?>, <?js= self.linkto(meta.shortpath, 'line ' + meta.lineno, null, 'line' + meta.lineno) ?>
-            </span>
-        </p>
     <?js } ?>
 </dl>

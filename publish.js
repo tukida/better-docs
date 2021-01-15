@@ -456,7 +456,7 @@ function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
         if (initCategory && subCategoryName) {
           view[
             `${subCategoryName}_${item.name}_nav`
-          ] = `<div class="category"><h3>${subCategoryName}</h3><ul>${itemsNavL1}</ul</div>`;
+          ] = `<div class="category"><h3>${itemHeading}</h3><ul>${itemsNavL1}</ul</div>`;
         }
       });
 
@@ -495,13 +495,15 @@ function buildGroupNav(members, title) {
     nav += '<h2>' + title + '</h2>';
   }
   Object.entries(sections).forEach(([section, value]) => {
-    nav += buildMemberNav(
-      section,
-      members[section] || [],
-      section,
-      seenTutorials,
-      linktoSection
-    );
+    if (value.haveNav) {
+      nav += buildMemberNav(
+        section,
+        members[section] || [],
+        value.title,
+        seenTutorials,
+        linktoSection
+      );
+    }
   });
   nav += buildMemberNav(
     '',
@@ -672,9 +674,13 @@ exports.publish = function(taffyData, opts, tutorials) {
     sectionsName.forEach((name) => {
       const resolver = require('./sections/resolver');
       resolver.renewRoot();
-      resolver.load(opts[name]);
+      resolver.load(opts[name].path);
       resolver.resolve();
-      sections[name] = resolver.root;
+      sections[name] = {
+        data: resolver.root,
+        title: opts[name].title || name,
+        haveNav: hasOwnProp.call(opts[name], 'haveNav') ? opts[name].haveNav : true,
+      };
     });
   }
 
@@ -700,7 +706,7 @@ exports.publish = function(taffyData, opts, tutorials) {
   // set up tutorials for helper
   helper.setTutorials(tutorials);
   Object.entries(sections).forEach(([key, section]) => {
-    helper.addSections(key, section);
+    helper.addSections(key, section.data);
   });
 
   data = helper.prune(data);
@@ -884,7 +890,7 @@ exports.publish = function(taffyData, opts, tutorials) {
           fs.readFileSync(`${opts[section]}/${section}.json`)
         );
         members[section] = Object.keys(sectionsFile).map(
-          (key) => value._sections[key]
+          (key) => value.data._sections[key]
         );
         view.smallHeader = false;
       } catch (error) {
@@ -893,17 +899,20 @@ exports.publish = function(taffyData, opts, tutorials) {
           throw error;
         }
         ''.toLocaleUpperCase;
-        members[section] = value.children;
+        members[section] = value.data.children;
       }
     });
   } else {
     Object.entries(sections).forEach(([section, value]) => {
-      members[section] = value.children;
+      members[section] = value.data.children;
     });
   }
   view.sections = {};
   Object.entries(sections).forEach(([section, value]) => {
-    view.sections[section] = members[section];
+    view.sections[section] = {
+      title: value.title,
+      data: members[section]
+    }
   });
 
   members.components = helper.find(data, {
@@ -1097,7 +1106,7 @@ exports.publish = function(taffyData, opts, tutorials) {
 
   saveChildren(tutorials);
   Object.entries(sections).forEach(([section, value]) => {
-    value.children.forEach((child) => {
+    value.data.children.forEach((child) => {
       generateTutorial(
         child.title,
         section,

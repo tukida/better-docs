@@ -1,33 +1,39 @@
 {
-    "tags": {
-        "allowUnknownTags": "all"
+  "tags": {
+    "allowUnknownTags": "all"
+  },
+  "source": {
+    "include": ["fixtures/typescript"],
+    "includePattern": "\\.(jsx|js|ts|tsx)$"
+  },
+  "plugins": ["plugins/markdown", "category", "component", "typescript"],
+  "opts": {
+    "encoding": "utf8",
+    "destination": "docs/",
+    "recurse": true,
+    "verbose": true,
+    "template": "./",
+    "sections": ["introduction", "development", "changelog"],
+    "introduction": {
+      "title": "ajsdhfkasdf",
+      "path": "./fixtures/introduction"
     },
-    "source": {
-        "include": ["fixtures/typescript"],
-        "includePattern": "\\.(jsx|js|ts|tsx)$"
+    "development": {
+      "title": "Development",
+      "path": "./fixtures/development"
     },
-    "plugins": [
-        "plugins/markdown",
-        "category",
-        "component",
-        "typescript"
-    ],
-    "opts": {
-        "encoding": "utf8",
-        "destination": "docs/",
-        "recurse": true,
-        "verbose": true,
-        "template": "./",
-        "sections": ["introduction", "development"],
-        "introduction": "./fixtures/introduction",
-        "development": "./fixtures/development"
-    },
-    "templates": {
-        "better-docs": {
-            "name": "Documentation",
-            "logo": "/images/logo.png",
-            "version": "v1.0.0"
-        },
-        "search": true
+    "changelog": {
+      "title": "Change Log",
+      "haveNav": false,
+      "path": "./fixtures/changelog"
     }
+  },
+  "templates": {
+    "better-docs": {
+      "name": "Documentation",
+      "logo": "/images/logo.png",
+      "version": "v1.0.0"
+    },
+    "search": true
+  }
 }

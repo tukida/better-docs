@@ -1,5 +1,13 @@
 {
   "development1": {
-    "title": "Development 1"
+    "title": "Development 1",
+    "children": {
+      "child1": {
+        "title": "Child 1"
+      }
+    }
+  },
+  "development2": {
+    "title": "Development 2"
   }
-}
+} 
