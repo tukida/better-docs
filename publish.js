@@ -365,6 +365,7 @@ function attachModuleSymbols(doclets, modules) {
 }
 
 function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
+  const betterDocs = (env && env.conf && env.conf['better-docs']) || {};
   const subCategories = items.reduce((memo, item) => {
     const subCategory = item.subCategory || initCategory;
     memo[subCategory] = memo[subCategory] || [];
@@ -381,8 +382,9 @@ function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
     const subCategoryItems = subCategories[subCategoryName];
     if (subCategoryItems.length) {
       var itemsNav = '';
-
       subCategoryItems.forEach(function(item) {
+        var methods = find({ kind: 'function', memberof: item.longname });
+        var members = find({ kind: 'member', memberof: item.longname });
         var itemsNavL1 = '';
         var displayName;
 
@@ -437,7 +439,7 @@ function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
                   linktoFn(
                     initCategory,
                     child.longname,
-                    displayName.replace(/\b(module|event):/g, '')
+                    child.longname.replace(/\b(module|event):/g, '')
                   ) +
                   '</li>';
                 loopChildTutorials(child);
@@ -447,6 +449,66 @@ function buildMemberNav(initCategory, items, itemHeading, itemsSeen, linktoFn) {
             }
           };
           loopChildTutorials(item);
+
+          if (members && members.length && members.forEach) {
+            members = members.filter(function(m) {
+              return (
+                m.longname &&
+                m.longname.indexOf('module:') !== 0 &&
+                m.access !== 'private'
+              );
+            });
+
+            itemsNav += "<ul class=''>";
+
+            members.forEach(function(member) {
+              if (env.conf.templates.default.useLongnameInNav) {
+                displayName = member.longname;
+              } else {
+                displayName = member.name;
+              }
+              if (!member.scope === 'static') return;
+              itemsNav += "<li data-type='member'";
+              if (betterDocs.collapse) itemsNav += " style='display: none;'";
+              itemsNav += '>';
+              itemsNav += linktoFn(
+                initCategory,
+                member.longname,
+                displayName.replace(/\b(module|event):/g, '')
+              );
+              itemsNav += '</li>';
+            });
+
+            itemsNav += '</ul>';
+          }
+
+          if (methods.length) {
+            itemsNav += "<ul class='methods'>";
+
+            methods.forEach(function(method) {
+              if (env.conf.templates.default.useLongnameInNav) {
+                displayName = method.longname;
+              } else {
+                displayName = method.name;
+              }
+              if (betterDocs.static === false && method.scope === 'static')
+                return;
+              if (betterDocs.private === false && method.access === 'private')
+                return;
+
+              itemsNav += "<li data-type='method'";
+              if (betterDocs.collapse) itemsNav += " style='display: none;'";
+              itemsNav += '>';
+              itemsNav += linktoFn(
+                initCategory,
+                method.longname,
+                displayName.replace(/\b(module|event):/g, '')
+              );
+              itemsNav += '</li>';
+            });
+
+            itemsNav += '</ul>';
+          }
 
           itemsNav += '</li>';
           itemsNavL1 += '</li>';
@@ -679,7 +741,9 @@ exports.publish = function(taffyData, opts, tutorials) {
       sections[name] = {
         data: resolver.root,
         title: opts[name].title || name,
-        haveNav: hasOwnProp.call(opts[name], 'haveNav') ? opts[name].haveNav : true,
+        haveNav: hasOwnProp.call(opts[name], 'haveNav')
+          ? opts[name].haveNav
+          : true
       };
     });
   }
@@ -912,7 +976,7 @@ exports.publish = function(taffyData, opts, tutorials) {
     view.sections[section] = {
       title: value.title,
       data: members[section]
-    }
+    };
   });
 
   members.components = helper.find(data, {

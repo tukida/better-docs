@@ -17,6 +17,11 @@ class ClassName {
    */
   static soemthingIs: number
 
+  /**
+   * aslkdjfkasd
+   * @param color hakjsdh
+   */
+  public kaljsdlkfja: number
 
   constructor(color: string) {
     const a = 1
