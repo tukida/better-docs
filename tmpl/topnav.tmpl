@@ -38,6 +38,12 @@
                 </div>
                 <?js } ?>
             <div class="navigation">
+                <a
+                    href="<?js= betterDocs.landing ? 'docs.html' : 'index.html' ?>"
+                    class="link"
+                >
+                    API Documentation
+                </a>
                 <?js if (Object.keys(this.sections).length) { ?>
                     <?js Object.entries(this.sections).forEach(([key, section]) => { ?>
                         <div class="dropdown is-hoverable is-right">
@@ -64,12 +70,6 @@
                         </div>
                     <?js }) ?>
                 <?js } ?>
-                <a
-                    href="<?js= betterDocs.landing ? 'docs.html' : 'index.html' ?>"
-                    class="link"
-                >
-                    API Documentation
-                </a>
                 <?js if(betterDocs.navLinks && betterDocs.navLinks.length) { ?> 
                     <?js betterDocs.navLinks.forEach(function(link) { ?>
                         <a
@@ -89,6 +89,12 @@
                 </a>
             </div>
             <div id="navBarMobile" class="navigation_mobile">
+                <a
+                    href="<?js= betterDocs.landing ? 'docs.html' : 'index.html' ?>"
+                    class="link <?js= 'API Documentation'==subtitle ? 'selected' : '' ?>"
+                >
+                    API Documentation
+                </a>
                 <?js if (Object.keys(this.sections).length) { ?>
                     <?js Object.entries(this.sections).forEach(([key, section]) => { ?>
                         <div class="nav-item dropdown">
@@ -115,12 +121,7 @@
                         </div>
                     <?js }) ?>
                 <?js } ?>
-                <a
-                    href="<?js= betterDocs.landing ? 'docs.html' : 'index.html' ?>"
-                    class="link <?js= 'API Documentation'==subtitle ? 'selected' : '' ?>"
-                >
-                    API Documentation
-                </a>
+
                 <?js if(betterDocs.navLinks && betterDocs.navLinks.length) { ?> 
                     <?js betterDocs.navLinks.forEach(function(link) { ?>
                         <a
